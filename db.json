@@ -1,0 +1,47 @@
+{
+    "commands": [
+      {
+        "name": "train vae",
+        "desc": "Train a VAE for heterogeneous reconstruction with known pose",
+        "args": {
+          "required": [
+            {
+              "name": "particles",
+              "type": "os.path.abspath",
+              "help": "Input particles (.mrcs, .star, .cs, or .txt)"
+            },
+            {
+              "name": "outdir",
+              "flags": ["-o", "--outdir"],
+              "type": "os.path.abspath",
+              "help": "Output directory to save model"
+            },
+            {
+              "name": "zdim",
+              "flags": ["--zdim"],
+              "type": "int",
+              "help": "Dimension of latent variable"
+            },
+            {
+              "name": "poses",
+              "flags": ["--poses"],
+              "type": "os.path.abspath",
+              "help": "Image poses (.pkl)"
+            }
+          ],
+          "optional": []
+        },
+        "id": 1
+      },
+      {
+        "name": "downsample images",
+        "desc": "Downsample an image stack or volume by clipping fourier frequencies",
+        "id": 2
+      },
+      {
+        "name": "analyze",
+        "desc": "Visualize latent space and generate volumes",
+        "id": 3
+      }
+    ]
+}
