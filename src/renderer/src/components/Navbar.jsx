@@ -6,7 +6,9 @@ import './Navbar.css';
 const Navbar = () => {
   return (
     <nav className="navbar">
-      <h1>cryoDRGN commands</h1>
+      <div className="title">
+        <Link to="/"><h1>cryoDRGN commands</h1></Link>
+      </div>
       <div className="links">
         <Link to="/">Home</Link>
       </div>

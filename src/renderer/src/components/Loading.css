@@ -1,11 +1,13 @@
 .spinner {
+    align-items: center;
     display: flex;
     justify-content: center;
-    margin: 80px auto;
+    height: 100vh;
 }
   
 .spinner span {
     font-size: 1.7rem;
+
     animation: fade 1s linear 0s infinite;
     padding-right: 1rem;
 }

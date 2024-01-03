@@ -1,5 +1,5 @@
 .command-list {
-    max-width: 600px;
+    max-width: 400px;
     margin: 40px auto;
     padding: 20px;
 }
@@ -8,10 +8,13 @@
     padding: 10px 16px;
     margin: 20px 0;
     border-bottom: 1px solid #fafafa;
+    box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
+    /* box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.1); */
+    /* text-align: center; */
 }
 
 .command-preview:hover {
-    box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
+    box-shadow: 2px 4px 6px rgba(0,0,0,0.5);
 }
 
 .command-preview h2 {
