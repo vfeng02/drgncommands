@@ -102,7 +102,7 @@ const Generate = () => {
             data-placement="top" 
             title={arg_details.help}
             type="text"
-            required = {group == "Positional arguments"}
+            required = {group == "positional arguments"}
             id={arg_name+"file"}
             value={arg_name in argValues ? argValues[arg_name] : ""}
             placeholder='Click to select path'
@@ -177,7 +177,7 @@ const Generate = () => {
         type={type}
         step={step}
         onWheel={onWheel}
-        required = {group == "Positional arguments"}
+        required = {group == "positional arguments"}
         placeholder={arg_details.default}
         key = {arg_name+index}
         onChange={(e) => updateArg(e, arg_name+index, e.target.value)}
@@ -192,7 +192,7 @@ const Generate = () => {
         type={type}
         step={step}
         onWheel={onWheel}
-        required = {group == "Positional arguments"}
+        required = {group == "positional arguments"}
         placeholder={arg_details.default}
         key = {arg_name}
         onChange={(e) => updateArg(e, arg_name, e.target.value)}
@@ -247,7 +247,7 @@ const Generate = () => {
             <form onSubmit={e => generate(e)}>
               <div className="accordion">
                 {Object.entries(command_args).map(([group, args]) => 
-                  (<Accordion key={group} defaultExpanded={group == "Positional arguments"}>
+                  (<Accordion key={group} defaultExpanded={group == "positional arguments"}>
                       <AccordionSummary key={group + "_name"} expandIcon={<ExpandMoreIcon />}><strong>{group}</strong></AccordionSummary>
                       <AccordionDetails key={group + "_details"}>
                         {Object.entries(args).map(([arg_name, arg_details]) =>(
