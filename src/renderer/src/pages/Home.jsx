@@ -1,5 +1,5 @@
 import React from 'react';
-import data from '../db.json';
+import commands from '../db.json';
 import { useState } from "react";
 import CommandsList from "../components/CommandsList";
 import Loading from "../components/Loading";
@@ -8,12 +8,13 @@ import useFetch from "../useFetch";
 
 const Home = () => {
   // const { error, isPending, data: commands } = useFetch('http://localhost:8000/commands');
+  console.log(commands["direct_traversal"].desc);
 
   return (
     <div className="home">
       {/* { error && <Error errorMessage="Unable to load data" /> }
       { isPending && <Loading />} */}
-      { data && <CommandsList commands={data.commands} /> }
+      { commands && <CommandsList commands={commands} /> }
     </div>
   );
 }

@@ -1,5 +1,5 @@
 {
-    "direct_traversal_add_args": {
+    "direct_traversal": {
         "desc": "Construct z path interpolating between anchor points",
         "args": {
             "positional arguments": {
