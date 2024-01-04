@@ -223,7 +223,7 @@ const Generate = () => {
           }}>
           <IconButton className="copy-icon" 
           sx={{
-            height: 40, marginTop: '20px',
+            height: 40, marginRight: '30px',
             }}>
             <ContentCopyIcon />
           </IconButton>
@@ -242,7 +242,7 @@ const Generate = () => {
         </div>)}
       {command_args ? (
         <div>
-          <h2 style={(generated.length > 0) ? { top: "160px" } : { top: "60px" }}>{command_name}</h2>
+          <h2 style={(generated.length > 0) ? { top: "150px" } : { top: "60px" }}>{command_name}</h2>
           <div className="arguments">
             <form onSubmit={e => generate(e)}>
               <div className="accordion">

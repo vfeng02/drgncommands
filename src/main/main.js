@@ -2,7 +2,8 @@ const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const path = require('node:path');
 const fs = require('fs');
 const url =require('url');
-const storage = require('electron-storage');
+const isDev = require("electron-is-dev");
+// const storage = require('electron-storage');
 
 // import { app, BrowserWindow, dialog, ipcMain } from 'electron';
 // import * as path from 'path';
@@ -74,7 +75,7 @@ function handleGetCommands() {
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1200,
+    width: 1100,
     height: 1000,
     webPreferences: {
       preload: path.join(__dirname, '../preload/preload.js'),
@@ -84,13 +85,16 @@ function createWindow() {
 
   // Vite dev server URL
 
-  mainWindow.loadURL(url.format({
+  mainWindow.loadURL(isDev ? 'http://localhost:5173/' : url.format({
     pathname: path.join(__dirname, '../renderer/index.html'),
     protocol: 'file:',
     slashes: true
-}));
-  // mainWindow.loadURL('http://localhost:5173/');
-  mainWindow.webContents.openDevTools();
+  }));
+
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+  }
+  
   mainWindow.on('closed', () => mainWindow = null);
 }
 

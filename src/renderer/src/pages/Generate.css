@@ -4,24 +4,25 @@
     /* background-color: #CCD5E5; */
     background-color: #A9B6D4;
     box-shadow: 5px 5px 5px 5px rgba(0,0,0,0.1);
-    height: 100px;
+    height: 80px;
     width: 100vw;
     display: flex;
     justify-content: center;
+    align-items: center;
     text-align: center;
-    /* align-items: center; */
     font-size: 1.2rem;
+    font-weight: 100;
+    font-style: italic;
     position: sticky;
-    /* padding-top: 5px; */
     top: 60px;
     overflow-y: scroll;
-    overflow-x: hidden;
+    overflow-x: scroll;
     z-index: 100;
   }
 
 .result-bar h3 {
-    min-width: 400px;
-    padding: 30px;
+    min-width: 60vw;
+    padding: 15px;
 }
 
 .generate h2 {
@@ -31,7 +32,7 @@
     height: 50px;
     width: 100%;
     position: sticky;
-    padding-top: 20px;
+    padding-top: 15px;
     text-align: center;
     z-index: 10;
 }
