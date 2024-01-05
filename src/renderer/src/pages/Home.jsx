@@ -1,14 +1,13 @@
 import React from 'react';
 import commands from '../db.json';
-import { useState } from "react";
+// import { useState } from "react";
 import CommandsList from "../components/CommandsList";
-import Loading from "../components/Loading";
-import Error from "../components/Error";
-import useFetch from "../useFetch";
+// import Loading from "../components/Loading";
+// import Error from "../components/Error";
+// import useFetch from "../useFetch";
 
 const Home = () => {
   // const { error, isPending, data: commands } = useFetch('http://localhost:8000/commands');
-  console.log(commands["direct_traversal"].desc);
 
   return (
     <div className="home">

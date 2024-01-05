@@ -1,19 +1,12 @@
 const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const path = require('node:path');
-const fs = require('fs');
 const url =require('url');
 const isDev = require("electron-is-dev");
-// const storage = require('electron-storage');
-
-// import { app, BrowserWindow, dialog, ipcMain } from 'electron';
-// import * as path from 'path';
-// import * as url from 'url';
+const nodeChildProcess = require('child_process');
 
 let mainWindow;
 
 if (require('electron-squirrel-startup')) app.quit();
-// const __filename = url.fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
 
 async function handleFileOpen() {
     const { canceled, filePaths } = await dialog.showOpenDialog({});
@@ -22,55 +15,23 @@ async function handleFileOpen() {
     }
 }
 
-function handleGetCommands() {
-  // const isPending = true;
-  console.log("in handle get commands")
+function handleRunScript (event, scriptName) {
+  console.log("in handle run script")
+  let script = nodeChildProcess.spawn('python', ['/Users/vickyfeng/Desktop/Thesis/drgnslurm/src/main/hello.py']);
 
-  const data = fs.readFileSync(path.join(__dirname, '../../db.json'), "utf8");
-  // const commands = JSON.parse(data);
-  // console.log("commands: " + commands.commands);
-  return data;
+  console.log('PID: ' + script.pid);
 
-  // fs.readFile(path.join(__dirname, '../../db.json'), "utf8")
-  // .then((res) => {
-  //   // console.log("received result "+ res)
-  //   return JSON.parse(res);
-  // })
-  // // .then((data) => {
-  // //   // isPending = false;
-  // //   // return (null, isPending, data);
-  // //   // console.log("resolving data " + data);
-  // //   return data;
-  // // })
-  // .catch((err) => {
-  //   if (err.name === 'AbortError') {
-  //     console.log('fetch aborted')
-  //   } else {
-  //     // auto catches error
-  //     // isPending = false;
-  //     // return (err.message, isPending, null);
-  //     console.log("encountered error with message: " + err.message);
-  //     return err.message;
-  //   }
-  // });
+  script.stdout.on('data', (data) => {
+      console.log('stdout: ' + data);
+  });
 
-  // fs.readFile(path.join(__dirname, '../../db.json'), 'utf-8', (err, data) => {
-  //   if (err) {
-  //     throw Error("Could not load command data from json");
-  //   }
-  //   isPending = false;
-  //   return (isPending, JSON.parse(data));
-  // })
+  script.stderr.on('data', (err) => {
+      console.log('stderr: ' + err);
+  });
 
-  // storage.get(path.join(__dirname, '../../db'))
-  // .then(data => {
-  //   return data;
-  // })
-  // .catch(err => {
-  //   console.error(err);
-  // });
-  
-  // return data;
+  script.on('exit', (code) => {
+      console.log('Exit Code: ' + code);
+  });
 }
 
 function createWindow() {
@@ -84,6 +45,7 @@ function createWindow() {
   });
 
   // Vite dev server URL
+  // console.log(isDev)
 
   mainWindow.loadURL(isDev ? 'http://localhost:5173/' : url.format({
     pathname: path.join(__dirname, '../renderer/index.html'),
@@ -99,8 +61,8 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+    ipcMain.on('run-script', handleRunScript);
     ipcMain.handle('dialog:openFile', handleFileOpen);
-    ipcMain.handle('getCommands', handleGetCommands);
     createWindow();
 });
 

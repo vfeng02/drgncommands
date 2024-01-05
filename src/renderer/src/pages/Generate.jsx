@@ -7,7 +7,7 @@ import { Accordion, AccordionSummary, AccordionDetails, MenuItem, Select, Switch
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const Generate = () => {
@@ -242,7 +242,7 @@ const Generate = () => {
         </div>)}
       {command_args ? (
         <div>
-          <h2 style={(generated.length > 0) ? { top: "150px" } : { top: "60px" }}>{command_name}</h2>
+          <h2 style={(generated.length > 0) ? { top: "140px" } : { top: "60px" }}>{command_name}</h2>
           <div className="arguments">
             <form onSubmit={e => generate(e)}>
               <div className="accordion">
@@ -267,6 +267,9 @@ const Generate = () => {
               </div>
               <button type="submit">Generate Command</button>
             </form>
+            <Link to={"/slurm"} state={{generatedCommand: generated}}>
+              <p>Run slurm script</p>
+            </Link>
           </div>
         </div>
       ) : <Error errorMessage="Data for this command does not exist" />}
