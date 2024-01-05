@@ -4,16 +4,6 @@ import '../App.css';
 import './Slurm.css';
 import { useLocation } from 'react-router-dom';
 
-async function writeFile() {
-    const fileName = "hello.py";
-    const path = "/Users/vickyfeng/Desktop/Thesis/drgncommands/src/main/" + fileName;
-    const content = "print('hello world')";
-    await window.electronAPI.writeFile([path, content]);
-}
-
-
-
-
 const Slurm = () => {
     const location = useLocation();
     const generated = location.state?.generatedCommand;
@@ -31,8 +21,6 @@ const Slurm = () => {
         <div className="slurm">
             <p>{output}</p>
             <button onClick={saveAndRun}>Click to save and run script</button>
-            <button onClick={writeFile}>Click to save script</button>
-            <button onClick={() => {window.electronAPI.runScript('/Users/vickyfeng/Desktop/Thesis/drgncommands/src/main/hello.py')}}>Click to run script</button>
         </div>
     );
 

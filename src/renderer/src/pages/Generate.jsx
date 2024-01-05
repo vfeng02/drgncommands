@@ -267,9 +267,9 @@ const Generate = () => {
               </div>
               <button type="submit">Generate Command</button>
             </form>
-            <Link to={"/slurm"} state={{generatedCommand: generated}}>
+            {/* <Link to={"/slurm"} state={{generatedCommand: generated}}>
               <p>Run slurm script</p>
-            </Link>
+            </Link> */}
           </div>
         </div>
       ) : <Error errorMessage="Data for this command does not exist" />}

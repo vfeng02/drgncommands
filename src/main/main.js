@@ -50,35 +50,6 @@ async function handleSaveAndRun(event, args) {
   return ('stdout: ' + output + '\n' + 'error: ' + error + '\n' + 'Exit Code: ' + exitCode);
 }
 
-function handleRunScript (event, path) {
-  let script = nodeChildProcess.spawn('python', [path]);
-
-  console.log('PID: ' + script.pid);
-
-  script.stdout.on('data', (data) => {
-      console.log('stdout: ' + data);
-  });
-
-  script.stderr.on('data', (err) => {
-      console.log('stderr: ' + err);
-  });
-
-  script.on('exit', (code) => {
-      console.log('Exit Code: ' + code);
-  });
-}
-
-async function handleWriteFile (event, args) {
-    const path = args[0];
-    const content = args[1];
-    fs.writeFile(path, content, err => {
-      if (err) {
-          console.error(err);
-      }
-    // file written successfully
-    });
-}
-
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1100,
@@ -112,8 +83,6 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-    ipcMain.on('run-script', handleRunScript);
-    ipcMain.on('write-file', handleWriteFile);
     ipcMain.handle('dialog:openFile', handleFileOpen);
     ipcMain.handle('save-and-run', handleSaveAndRun);
     createWindow();
