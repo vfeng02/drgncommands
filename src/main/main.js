@@ -1,6 +1,7 @@
 const { app, BrowserWindow, dialog, ipcMain } = require('electron');
 const path = require('node:path');
 const url =require('url');
+const fs = require('fs');
 const isDev = require("electron-is-dev");
 const nodeChildProcess = require('child_process');
 
@@ -15,9 +16,42 @@ async function handleFileOpen() {
     }
 }
 
-function handleRunScript (event, scriptName) {
-  console.log("in handle run script")
-  let script = nodeChildProcess.spawn('python', ['/Users/vickyfeng/Desktop/Thesis/drgnslurm/src/main/hello.py']);
+async function handleSaveAndRun(event, args) {
+  const path = args[0];
+  const content = args[1];
+  fs.writeFile(path, content, err => {
+    if (err) {
+        console.error(err);
+    }
+  // file written successfully
+  });
+
+  let script = nodeChildProcess.spawn('python', [path]);
+
+  let output = "";
+  let error = "";
+  let exitCode = "";
+
+  console.log('PID: ' + script.pid);
+
+  script.stdout.on('data', (data) => {
+    console.log('stdout: ' + data);
+    output = data;
+  });
+
+  script.stderr.on('data', (err) => {
+    error = err;
+  });
+
+  script.on('exit', (code) => {
+    exitCode = code;
+  });
+
+  return ('stdout: ' + output + '\n' + 'error: ' + error + '\n' + 'Exit Code: ' + exitCode);
+}
+
+function handleRunScript (event, path) {
+  let script = nodeChildProcess.spawn('python', [path]);
 
   console.log('PID: ' + script.pid);
 
@@ -32,6 +66,17 @@ function handleRunScript (event, scriptName) {
   script.on('exit', (code) => {
       console.log('Exit Code: ' + code);
   });
+}
+
+async function handleWriteFile (event, args) {
+    const path = args[0];
+    const content = args[1];
+    fs.writeFile(path, content, err => {
+      if (err) {
+          console.error(err);
+      }
+    // file written successfully
+    });
 }
 
 function createWindow() {
@@ -53,6 +98,12 @@ function createWindow() {
     slashes: true
   }));
 
+  // mainWindow.loadURL(url.format({
+  //   pathname: path.join(__dirname, '../renderer/index.html'),
+  //   protocol: 'file:',
+  //   slashes: true
+  // }));
+
   if (isDev) {
     mainWindow.webContents.openDevTools();
   }
@@ -62,7 +113,9 @@ function createWindow() {
 
 app.whenReady().then(() => {
     ipcMain.on('run-script', handleRunScript);
+    ipcMain.on('write-file', handleWriteFile);
     ipcMain.handle('dialog:openFile', handleFileOpen);
+    ipcMain.handle('save-and-run', handleSaveAndRun);
     createWindow();
 });
 
